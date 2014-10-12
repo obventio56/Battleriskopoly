@@ -1,0 +1,12 @@
+<%= form_for(@user, remote: true) do |f| %>
+  <p><%= link_to_add_fields "Create A Fort", f, :forts, "create_fort" %>
+  <%= f.fields_for :forts do |builder| %>
+  <% end %>
+	<p><%= link_to_add_fields "Create A Camp", f, :encampments, "create_camp" %>
+	<%= f.fields_for :encampments do |builder| %>
+  <% end %>
+	<p><%= link_to_add_fields "Trade", f, :trades, "create_trade" %>
+	<%= f.fields_for :trade do |builder| %>
+  <% end %>
+  <%= f.submit "Create", :id => "submit", :class => "button" %>
+<% end %>

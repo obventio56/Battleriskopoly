@@ -1,0 +1,3 @@
+<%= f.fields_for :association, child_index: Time.now.to_i do |a| %>
+    <%= a.text_feld :your_fields %>
+<% end %>

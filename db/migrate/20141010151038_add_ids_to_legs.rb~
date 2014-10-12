@@ -1,0 +1,4 @@
+class AddIdsToLegs < ActiveRecord::Migration
+  def change
+  end
+end

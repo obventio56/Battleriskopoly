@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  what: MyString
+  quantity: 1
+  durration: MyString
+
+two:
+  what: MyString
+  quantity: 1
+  durration: MyString

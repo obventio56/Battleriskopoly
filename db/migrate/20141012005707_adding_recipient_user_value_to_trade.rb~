@@ -1,0 +1,4 @@
+class AddingRecipientUserValueToTrade < ActiveRecord::Migration
+  def change
+  end
+end

@@ -1,0 +1,88 @@
+// Place all the styles related to the User controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+	background-color:#ffffff;
+	}
+
+
+#myCanvas {
+	display:none;
+	}
+.active_continent {
+	display:none;
+}
+.active {
+	display:none;
+	}
+#map {
+	width:100%;
+	position:absolute;
+	z-index: -2;
+	}
+
+.continent {
+	display:none;
+	z-index: 2;
+	position:absolute;
+
+	}
+
+.territory {
+	display:none;
+	z-index: 4;
+	position:absolute;
+
+	}
+.test1 {
+	position:relative;
+    margin-right:5%;
+	}
+#filter {
+	position:absolute;
+	opacity:0.75;
+	
+	}
+#filter2 {
+	position:absolute;
+	opacity:0.5;
+	
+	}
+#create_fort {
+	display:none;
+	}
+#create_camp {
+	display:none;
+	}
+#submit {
+	display:none;
+	}
+.button {
+	margin-left:5%;
+	z-index:5;
+	display:none;
+
+	}
+.sprite {
+	display:none;
+	position:absolute;
+	}
+#create_sprite_canvas {
+	position:absolute;
+	}
+.test {
+	position:relative;
+	z-index:700;
+	}
+.canvas {
+	position:absolute;
+}
+.temp_canvas {
+	display:none;
+}
+#create_trade {
+
+}
+.trade_button {
+	display:none;
+}

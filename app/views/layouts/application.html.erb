@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Battleriskopoly</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+
+</head>
+<body>
+<li><%= link_to "Home", root_path %></li>
+<% if signed_in? %>
+	<li><%= link_to "Sign Out", signout_path, method: "delete" %></li>
+<% else %>
+
+          
+<% end %>
+<%= yield %>
+
+</body>
+</html>

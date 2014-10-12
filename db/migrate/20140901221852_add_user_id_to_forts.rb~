@@ -1,0 +1,4 @@
+class AddUserIdToForts < ActiveRecord::Migration
+  def change
+  end
+end

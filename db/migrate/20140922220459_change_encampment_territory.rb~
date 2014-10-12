@@ -1,0 +1,4 @@
+class ChangeEncampmentTerritory < ActiveRecord::Migration
+  def change
+  end
+end

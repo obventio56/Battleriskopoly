@@ -1,0 +1,9 @@
+class RemoveTradeValuesFromTrade < ActiveRecord::Migration
+  def change
+	remove_column :trade, :what
+	remove_column :trade, :quantity
+	remove_column :trade, :fort_id
+	add_column :trade, :sending_fort_id, :integer
+	add_column :trade, :recipient_fort_id, :integer
+  end
+end

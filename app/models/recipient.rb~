@@ -1,0 +1,5 @@
+class Recipient < ActiveRecord::Base
+	has_one :trade
+	belongs_to :fort
+
+end

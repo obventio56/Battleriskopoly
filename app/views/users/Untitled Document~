@@ -1,0 +1,6 @@
+<%= form_for @user do |f| %>
+  <%= f.fields_for :forts do |builder| %>
+    <%= render "forts_fields", :f => builder %>
+  <% end %>
+  <p><%= f.submit "Create a Fort" %></p>
+<% end %>

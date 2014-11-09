@@ -1,12 +1,8 @@
 BR::Application.routes.draw do
 	resources :sessions, only: [:new, :create, :destroy]
+	resources :forts
 	resources :encampments
-
-	resources :users do
-	   collection do
-		  get :add_fort
-	   end
-	end
+	resources :users
 
   	root 'home#home'
 	match '/signup',  to: 'users#new',            via: 'get'

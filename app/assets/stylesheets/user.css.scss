@@ -1,48 +1,32 @@
 // Place all the styles related to the User controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-body {
-	background-color:#ffffff;
-	}
+body {background-color:#949494;}
 
+#myCanvas {display:none;}
 
-#myCanvas {
-	display:none;
-	}
-.active_continent {
-	display:none;
-}
-.active {
-	display:none;
-	}
-#map {
-	width:100%;
-	position:absolute;
-	z-index: -2;
-	}
+.active_continent {display:none;}
 
-.continent {
-	display:none;
-	z-index: 2;
-	position:absolute;
+.active {display:none;}
 
-	}
+#map    {width:100%;
+        position:absolute;
+        z-index: -2;}
 
-.territory {
-	display:none;
-	z-index: 4;
-	position:absolute;
+.continent {display:none;
+	       z-index: 2;
+	       position:absolute;}
+    
+.territory {display:none;
+	       z-index: 4;
+	       position:absolute;}
 
-	}
-.test1 {
-	position:relative;
-    margin-right:5%;
-	}
-#filter {
-	position:absolute;
-	opacity:0.75;
-	
-	}
+.test1  {position:relative;
+        margin-right:5%;}
+
+#filter {position:absolute;
+        opacity:0.75;}
+
 #filter2 {
 	position:absolute;
 	opacity:0.5;
@@ -86,3 +70,19 @@ body {
 .trade_button {
 	display:none;
 }
+#color_territory_active_canvas {
+	display:none;
+	}
+#color_territory_active_image {
+	display:none;
+	}
+#color_map_overlay {
+	display:none;
+}
+
+#titlediv  {width:750px;
+            height:100px;
+            margin-left:auto;
+            margin-right:auto;}
+
+#title  {z-index:-1;}

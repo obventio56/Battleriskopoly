@@ -9,8 +9,10 @@ class User < ActiveRecord::Base
   has_many :trades
   accepts_nested_attributes_for :trades
 
-  has_many :legs, through: :trades
-  accepts_nested_attributes_for :legs
+  has_many :trade_proposals
+  accepts_nested_attributes_for :trade_proposals
+
+  belongs_to :game
 
   before_save { self.email = email.downcase }
   before_create :create_remember_token

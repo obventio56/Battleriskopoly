@@ -5,8 +5,11 @@
 	<p><%= link_to_add_fields "Create A Camp", f, :encampments, "create_camp" %>
 	<%= f.fields_for :encampments do |builder| %>
   <% end %>
-	<p><%= link_to_add_fields "Trade", f, :trades, "create_trade" %>
-	<%= f.fields_for :encampments do |builder| %>
+	<p><%= link_to_add_fields "Create A Trade Proposal", f, :trades, "create_trade" %>
+	<%= f.fields_for :trade do |builder| %>
   <% end %>
+	<p><%= link_to_add_fields "Leg", f, :legs, "create_leg" %>
+		<%= f.fields_for :leg do |builder| %>
+  	<% end %>
   <%= f.submit "Create", :id => "submit", :class => "button" %>
 <% end %>

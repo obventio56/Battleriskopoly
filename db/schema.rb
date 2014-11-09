@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141012010010) do
+ActiveRecord::Schema.define(version: 20141102220318) do
 
   create_table "encampments", force: true do |t|
     t.string   "name"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20141012010010) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "territory"
+    t.integer  "game_id"
   end
 
   create_table "forts", force: true do |t|
@@ -50,12 +51,61 @@ ActiveRecord::Schema.define(version: 20141012010010) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.string   "territory"
+    t.integer  "game_id"
+  end
+
+  create_table "game_attributes", force: true do |t|
+    t.integer "color"
+    t.integer "user_id"
+    t.integer "game_id"
+  end
+
+  create_table "games", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.string   "private"
+    t.string   "central_america_owner_id"
+    t.string   "central_asia_owner_id"
+    t.string   "central_south_america_owner_id"
+    t.string   "china_owner_id"
+    t.string   "coastal_africa_owner_id"
+    t.string   "coastal_south_america_owner_id"
+    t.string   "congo_owner_id"
+    t.string   "east_africa_owner_id"
+    t.string   "eastern_canada_owner_id"
+    t.string   "eastern_south_america_owner_id"
+    t.string   "egypt_owner_id"
+    t.string   "greenland_owner_id"
+    t.string   "iceland_owner_id"
+    t.string   "india_owner_id"
+    t.string   "indonesia_owner_id"
+    t.string   "madagascar_owner_id"
+    t.string   "middle_east_owner_id"
+    t.string   "mongolia_owner_id"
+    t.string   "non_contiguous_united_states_owner_id"
+    t.string   "northeastern_united_states_owner_id"
+    t.string   "northern_australia_owner_id"
+    t.string   "northern_europe_owner_id"
+    t.string   "northwestern_united_states_owner_id"
+    t.string   "pacific_asia_owner_id"
+    t.string   "papua_new_guinea_owner_id"
+    t.string   "russia_owner_id"
+    t.string   "sahara_owner_id"
+    t.string   "southeastern_asia_owner_id"
+    t.string   "southeastern_united_states_owner_id"
+    t.string   "southern_african_territory_owner_id"
+    t.string   "southern_australia_owner_id"
+    t.string   "southern_europe_owner_id"
+    t.string   "southwestern_united_states_owner_id"
+    t.string   "ukraine_owner_id"
+    t.string   "united_kingdom_owner_id"
+    t.string   "western_europe_owner_id"
+    t.string   "western_canada_owner_id"
+    t.string   "western_south_america_owner_id"
   end
 
   create_table "legs", force: true do |t|
-    t.string   "what"
-    t.integer  "quantity"
-    t.string   "durration"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "recipient_fort_id"
@@ -63,6 +113,19 @@ ActiveRecord::Schema.define(version: 20141012010010) do
     t.integer  "trade_id"
     t.integer  "sending_user_id"
     t.integer  "recipient_user_id"
+  end
+
+  create_table "trade_proposals", force: true do |t|
+    t.integer  "fort_id"
+    t.integer  "user_id"
+    t.integer  "recipient_user_id"
+    t.integer  "recipient_fort_id"
+    t.string   "what"
+    t.integer  "quantity"
+    t.integer  "trade_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "durration"
   end
 
   create_table "trades", force: true do |t|
@@ -73,6 +136,15 @@ ActiveRecord::Schema.define(version: 20141012010010) do
     t.integer  "recipient_fort_id"
     t.integer  "sending_user_id"
     t.integer  "recipient_user_id"
+    t.integer  "game_id"
+    t.string   "what"
+    t.integer  "quantity"
+  end
+
+  create_table "user_game_attributes", force: true do |t|
+    t.integer  "color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
@@ -83,6 +155,8 @@ ActiveRecord::Schema.define(version: 20141012010010) do
     t.datetime "updated_at"
     t.string   "password_digest"
     t.string   "remember_token"
+    t.integer  "game_id"
+    t.string   "color"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

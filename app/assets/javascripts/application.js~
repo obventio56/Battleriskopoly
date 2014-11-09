@@ -15,7 +15,10 @@
 //= require turbolinks
 //= require_tree .
 function add_fields(link, association, content) {
-        var new_id = 9;
+        var new_id = Date().getTime();
         var regexp = new RegExp("new_" + association, "g");
         $(link).parent().before(content.replace(regexp, new_id));
 }
+function clickButton(button_id) {
+  document.getElementById(button_id).click();
+  }

@@ -5,8 +5,7 @@
     <%= f.text_field :ownership %>
 	<%= f.hidden_field :xco %>
 	<%= f.hidden_field :yco %>
+	<%= f.hidden_field :game_id %>
 	<%= f.hidden_field :territory %>
 	<%= f.hidden_field :date_created %>
-	<%= f.fields_for :leg do |builder| %>
-  	<% end %>
 </div>

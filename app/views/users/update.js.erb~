@@ -1,1 +1,1 @@
-$("<%= escape_javascript(render partial: "users/fort", collection: @fort) %>").appendTo("#fort_info");
+$("<%= escape_javascript(render partial: "users/fort", collection: @fort) %>").appendTo("body");

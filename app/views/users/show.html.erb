@@ -20,7 +20,44 @@ var trading = "f";
 var selected;
 // Defining lists of territories and continents with their active color values and their starting points.
 
-	var colors = [["#central_america", [0xe5,0x42,0x42], [488,780]], ["#central_asia",[0xf1,0x71,0x71], [2054,526]], ["#central_south_america",[0xfb,0x07,0x07], [822,1020]], ["#china",[0xfb,0x07,0xca], [2342,542]], ["#coastal_africa",[0xd0,0x2e,0xb0], [1436,959]], ["#coastal_south_america",[0xc4,0x56,0xae], [908,1340]], ["#congo",[0x87,0x13,0x70], [1720,1015]], ["#eastern_africa",[0x96,0x0e,0xbd], [1844,887]], ["#eastern_canada",[0xc1,0x52,0xe1], [394,206]], ["#eastern_south_america",[0xc6,0x00,0xff], [904,1088]], ["#egypt",[0x5d,0x1e,0x6f], [1724,774]], ["#greenland",[0x48,0x0e,0xcb], [918,204]], ["#iceland",[0x84,0x55,0xef], [1393,399]], ["#india",[0x32,0x3a,0xde], [2278,786]], ["#indonesia",[0x5f,0x65,0xd0], [2558,1084]], ["#madagascar",[0x5f,0xa4,0xd0], [2052,1280]], ["#middle_east",[0x0f,0x97,0xed], [1868,664]], ["#mongolia",[0x33,0x79,0xa6], [2480,568]], ["#non_contiguous_united_states",[0x7e,0xc2,0xed], [0,340]], ["#northeastern_united_states",[0x30,0xcf,0xd5], [704,596]], ["#northern_australia",[0x6b,0xf6,0xfb], [2872,1260]], ["#northern_europe",[0x22,0x7f,0x82], [1647,500]], ["#northwestern_united_states",[0x67,0x91,0x93], [414,598]], ["#pacific_asia",[0x73,0xe1,0xb4], [2834,526]], ["#new_zealand",[0x06,0xb5,0x6d], [3010,1163]], ["#russia",[0x23,0xab,0x73], [1902,206]], ["#sahara",[0x23,0xab,0x33], [1454,730]], ["#southeastern_asia",[0x7b,0xe1,0x87], [2406,800]], ["#southeastern_united_states",[0x00,0xff,0x1e], [718,734]], ["#southern_african_territory",[0x19,0x77,0x24], [1732,1242]], ["#southern_australia",[0x50,0x7E,0x55], [2714,1296]], ["#southern_europe",[0x8f,0xc6,0x40], [1688,602]], ["#southwestern_united_states",[0x51,0x8a,0x00], [406,660]], ["#ukraine",[0x97,0xde,0x32], [1660,340]], ["#united_kingdom", [0x19,0xaf,0xe0], [1522,490]], ["#western_europe",[0x8a,0xa6,0x33], [1520,578]], ["#western_canada", [0xff,0xea,0x3d], [250,349]], ["#western_south_america",[0xea,0xdb,0x35], [834,1143]]];
+	var colors = [["#central_america", [0xe5,0x42,0x42], [488,780] ,[0.311006362]],
+["#central_asia",[0xf1,0x71,0x71], [2054,526] ,[0.284473688]],
+ ["#central_south_america",[0xfb,0x07,0x07], [822,1020],[0.402101331]], 
+["#china",[0xfb,0x07,0xca], [2342,542] ,[0.073106002]], 
+["#coastal_africa",[0xd0,0x2e,0xb0], [1436,959] ,[0.653478724]], 
+["#coastal_south_america",[0xc4,0x56,0xae], [908,1340] ,[1.025283875]],
+ ["#congo",[0x87,0x13,0x70], [1720,1015] ,[4.093718719]], 
+["#eastern_africa",[0x96,0x0e,0xbd], [1844,887] ,[3.45647866]], 
+["#eastern_canada",[0xc1,0x52,0xe1], [394,206] ,[0.338781336]], 
+["#eastern_south_america",[0xc6,0x00,0xff], [904,1088] ,[1.078443444]], 
+["#egypt",[0x5d,0x1e,0x6f], [1724,774] ,[0.143233025]], 
+["#greenland",[0x48,0x0e,0xcb], [918,204] ,[1]],
+ ["#iceland",[0x84,0x55,0xef], [1393,399] ,[0.566702988]],
+ ["#india",[0x32,0x3a,0xde], [2278,786] ,[0.023725458]], 
+["#indonesia",[0x5f,0x65,0xd0], [2558,1084] ,[0.177003406]], 
+["#madagascar",[0x5f,0xa4,0xd0], [2052,1280] ,[2.751700999]],
+ ["#middle_east",[0x0f,0x97,0xed], [1868,664] ,[0.218084511]], 
+["#mongolia",[0x33,0x79,0xa6], [2480,568] ,[8.573449039]], 
+["#new_zealand",[0x06,0xb5,0x6d], [3010,1163] ,[0.292389938]],
+["#non_contiguous_united_states",[0x7e,0xc2,0xed], [0,340] ,[1.555525194]],
+ ["#northeastern_united_states",[0x30,0xcf,0xd5], [704,596] ,[0.02432892]], 
+["#northern_australia",[0x6b,0xf6,0xfb], [2872,1260] ,[1.060924816]], 
+["#northern_europe",[0x22,0x7f,0x82], [1647,500] ,[0.03048697]],
+ ["#northwestern_united_states",[0x67,0x91,0x93], [414,598] ,[0.145380297]], 
+["#pacific_asia",[0x73,0xe1,0xb4], [2834,526] ,[0.014887273]], 
+ ["#russia",[0x23,0xab,0x73], [1902,206] ,[0.484910872]],
+ ["#sahara",[0x23,0xab,0x33], [1454,730] ,[1.277875253]], 
+["#southeastern_asia",[0x7b,0xe1,0x87], [2406,800] ,[0.123679885]], 
+["#southeastern_united_states",[0x00,0xff,0x1e], [718,734] ,[0.03018645]], 
+["#southern_african_territory",[0x19,0x77,0x24], [1732,1242] ,[0.986084614]],
+ ["#southern_australia",[0x50,0x7E,0x55], [2714,1296] ,[0.442689699]], 
+["#southern_europe",[0x8f,0xc6,0x40], [1688,602] ,[0.035175045]], 
+["#southwestern_united_states",[0x51,0x8a,0x00], [406,660] ,[0.059710917]],
+ ["#ukraine",[0x97,0xde,0x32], [1660,340] ,[0.076732312]], 
+["#united_kingdom", [0x19,0xaf,0xe0], [1522,490] ,[0.01625007]],
+ ["#western_europe",[0x8a,0xa6,0x33], [1520,578] ,[0.018317252]],
+ ["#western_canada", [0xff,0xea,0x3d], [250,349] ,[1.358437809]], 
+["#western_south_america",[0xea,0xdb,0x35], [834,1143] ,[2.043553816]]];
 
 	var color_key = [["#asia", [0x32,0x7c,0x00], [1844,226], [1662,1018]], ["#australia", [0x00,0x7c,0x78], [2546,1080], [868,640]], ["#africa", [0x2f,0x44,0x5a], [1444,724], [722,842]], ["#europe", [0x5a,0x4c,0x2f], [1390,332], [654,442]], ["#north_america", [0x43,0x5a,0x2f], [0,178], [1532,912]], ["#south_america", [0x53,0x2f,0x5a], [798,1008], [528,786]]];
 
@@ -41,6 +78,154 @@ var previous_level = [];
 
 $( document ).ready(function() {
 
+$("#submitTradeDiv").click(function(submitEvent) {
+	var submitElem = document.elementFromPoint(submitEvent.pageX, submitEvent.pageY);
+	if (submitElem.id == "submitTrade") {
+		$("#edit_user_1").submit();
+	}
+});
+	function parseDates() {
+		var newRenderedForts = [];
+		var newRenderedEncampments = [];
+		date = Date.today();
+		for (i = 0; i < rendered_forts.length; i++) {
+			createDate = Date.parse(rendered_forts[i][0]["date"].slice(0,-5));
+			if (createDate.getTime() <= date.getTime()) {
+				newRenderedForts.push(rendered_forts[i]);
+			}
+		}
+		for (i = 0; i < rendered_encampments.length; i++) {
+			createDate = Date.parse(rendered_encampments[i][0]["date"].slice(0,-5));
+			if (createDate.getTime() <= date.getTime()) {
+				newRenderedEncampments.push(rendered_encampments[i]);
+			}
+		}
+		rendered_forts = newRenderedForts
+		rendered_encampments = newRenderedEncampments
+	}
+
+// I validate this serverside, don't get cheeky
+
+	function calculateCost(StartingPoint, EndingPoint) {
+
+		var canvas = document.getElementById("color_territory_active_canvas")
+		var context = canvas.getContext("2d")
+		var activeImage = document.getElementById("color_territory_active_image");
+		context.drawImage(activeImage, 0, 0);
+
+		if (StartingPoint[1] > EndingPoint[1]) {
+			var temp = StartingPoint[1];
+			StartingPoint[1] = EndingPoint[1]
+			EndingPoint[1] = temp			
+		}
+		if (StartingPoint[0] > EndingPoint[0]) {
+			var temp = StartingPoint[0];
+			StartingPoint[0] = EndingPoint[0]
+			EndingPoint[0] = temp			
+		}
+		console.log(StartingPoint,EndingPoint)
+
+		var total = 0;
+		var percentInTerritory = [];
+		var currentTerritory = [];
+		var midPoint = [];
+		var checkNext = "t";
+
+		var mapData = context.getImageData(0,0,$("#color_territory_active_canvas").width(), $("#color_territory_active_canvas").height());
+
+		if (Math.abs(StartingPoint[1] - EndingPoint[1]) >= Math.abs(StartingPoint[0] - EndingPoint[0])) {
+			var slope = (StartingPoint[1] - EndingPoint[1])/(StartingPoint[0] - EndingPoint[0]);
+			for (i = StartingPoint[0]; i <= EndingPoint[0]; i++ ) {
+				for (y = 0; y < slope - 1; y++) {
+					var imageData = [mapData["data"][3*(Math.round((3508*(StartingPoint[1] + i)) + (StartingPoint[0] + (i*slope) + y)))], mapData["data"][3*(Math.round((3508*(StartingPoint[1] + i)) + (StartingPoint[0] + (i*slope) + y))) + 1], mapData["data"][3*(Math.round((3508*(StartingPoint[1] + i)) + (StartingPoint[0] + (i*slope) + y))) + 2]];
+					if (0x00 == imageData[0] && 0x00 == imageData[1] && 0x00 == imageData[2]) {
+						checkNext = "t";
+						midPoint[1] = StartingPoint[1] + (Math.round(slope*(i - 1))+y);
+						currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2); 
+						percentInTerritory.push(currentTerritory);
+					}
+					else if (checkNext == "t") {
+						currentTerritory = [];
+						midPoint = [];
+						var bellowTerritory
+						for (var l = 0; l < colors.length; l++) {
+							if (colors[l][1][0] == imageData[0] && colors[l][1][1] == imageData[1] && colors[l][1][2] == imageData[2]) {
+								bellowTerritory = colors[l];
+							}
+						}
+						currentTerritory.push(bellowTerritory);
+						currentTerritory.push(1);
+						midPoint[0] = StartingPoint[1] + (Math.round(slope*(i))+y); 
+						checkNext = "f"
+					}
+					else {
+						currentTerritory[1]++;
+					}
+				}
+			}
+			midPoint[1] = StartingPoint[1] + (Math.round(slope*(EndingPoint[0] - 1))+slope)
+			currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2); 
+			percentInTerritory.push(currentTerritory);
+			currentTerritory = [];
+			midPoint = [];
+		}
+		else {
+			var slope = (StartingPoint[0] - EndingPoint[0])/(StartingPoint[1] - EndingPoint[1]);
+			for (i = StartingPoint[1]; i <= EndingPoint[1]; i++ ) {
+				for (y = 0; y < slope - 1; y++) {
+					var offsetFactor = -1;
+					if (StartingPoint[1] + i == 0) {
+						offsetFactor = 0;
+					}
+					//console.log(i - StartingPoint[1])
+					//console.log(4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) )
+					console.log(mapData)
+					var imageData = [mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y))], mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) + 1], mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) + 2]];
+					if (0x00 == imageData[0] && 0x00 == imageData[1] && 0x00 == imageData[2]) {
+						checkNext = "t";
+						midPoint[1] = StartingPoint[1] + i; 
+						currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2);
+						percentInTerritory.push(currentTerritory);
+					}
+					else if (checkNext == "t") {
+						currentTerritory = [];
+						midPoint = [];
+						var bellowTerritory
+						for (var l = 0; l < colors.length; l++) {
+							if (colors[l][1][0] == imageData[0] && colors[l][1][1] == imageData[1] && colors[l][1][2] == imageData[2]) {
+								bellowTerritory = colors[l];
+							}
+						}
+						console.log(bellowTerritory)
+						currentTerritory.push(bellowTerritory);
+						currentTerritory.push(1);
+						midPoint[0] = StartingPoint[1] + i; 
+						checkNext = "f"
+					}
+					else {
+						currentTerritory[1]++;
+					}
+				}
+			}
+			midPoint[1] = StartingPoint[1] + Math.abs(StartingPoint[1] - EndingPoint[1])
+			currentTerritory.push(Math.abs(midPoint[0] - midPoint[1])/2); 
+			percentInTerritory.push(currentTerritory);
+			currentTerritory = [];
+			midPoint = [];
+		}
+		for (i = 0; i < percentInTerritory.length; i++) {
+			var distortionFactor = 0.0025*(Math.abs(1754 - percentInTerritory[i][2])) + .9722;
+			if (percentInTerritory[i][0] !== undefined) {
+				var infaFactor = colors[percentInTerritory[i][0]][3];
+				total = total + (0.035*8.8642857143*distortionFactor*infaFactor*percentInTerritory[i][1]);
+			}
+			else {
+				total = total + (0.0035*8.8642857143*distortionFactor*percentInTerritory[i][1]);
+			}
+		}
+		return total;
+	}
+	console.log(calculateCost([100,100],[300,301]))
 	function calculate_lines(itinerary, i,switchback,level,gsf) {
 				var sxco;
 				var syco;
@@ -54,6 +239,17 @@ $( document ).ready(function() {
 				var map_offset = $("#map").offset();
 				if (itinerary[i] != "nil" && (itinerary[i - 1] != "nil" && itinerary[i - 1] != "nil" != itinerary[itinerary.length - 1])) {
 					if (i != 0) {
+						var fortTerritory
+						var lastFortTerritory; 	
+						for (g = 0; g < colors.length; g++) {
+							if (colors[g][0] == itinerary[i][0]["territory"]) {
+								fortTerritory = g; 	
+							}
+							if (colors[g][0] == itinerary[i - 1][0]["territory"]) {
+								lastFortTerritory = g; 	
+							}
+						}
+						//var cost = calculateCost([itinerary[i-1][0]["xco"] + colors[lastFortTerritory][2][0],itinerary[i-1][0]["yco"] + colors[lastFortTerritory][2][1]], [itinerary[i][0]["xco"] + colors[fortTerritory][2][0],itinerary[i][0]["yco"] + colors[fortTerritory][2][1]])
 						itinerary[i] = itinerary[i].slice(0,2);
 						itinerary[i - 1] = itinerary[i - 1].slice(0,2);
 						if (level == "globe") {
@@ -289,7 +485,6 @@ $( document ).ready(function() {
 						}
 		return [sxco,syco,exco,eyco,switchback,level,fiixco,fiiyco,fixco,fiyco,gradient];
 	}
-
 	function render_trade_route(level) {
 	
 		var gsf = $("#map").width()/3508;
@@ -386,7 +581,6 @@ $( document ).ready(function() {
 										exco = $(color_key[curr_continent][0]).position().left;
 									}
 									eyco = m*exco + b;
-									console.log(eyco,exco);
 									gradone = cstx.createLinearGradient(sxco, syco, exco, eyco);
 									gradone.addColorStop(0, "black");
 									gradone.addColorStop(1, "transparent");
@@ -399,7 +593,6 @@ $( document ).ready(function() {
 										sxco = $(color_key[curr_continent][0]).position().left;
 									}
 									syco = m*sxco + b;
-									console.log(syco,sxco);
 									gradone = cstx.createLinearGradient(sxco, syco, exco, eyco);
 									gradone.addColorStop(0, "transparent");
 									gradone.addColorStop(1, "black");
@@ -495,8 +688,17 @@ function render_trade() {
 								}
 							}
 						}
+							if (itinerary.length > 1) {
+							$("#submitTrade").remove();
+							$("div#submitTradeDiv").html("<button id='submitTrade'>Submit Shipping Proposal</button>");
+							}
+							else {
+							$("#submitTrade").remove();
+							}
+
 							var index = y + 1;
 						if (y == 0) {
+							var what = $(".commodity_sprite");
 							if (itinerary[y] == "nil") {
 								$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
 							}
@@ -520,6 +722,7 @@ function render_trade() {
 								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button>");
 							}
 						}
+					$("div#create_trade").prepend(what);
 					}
 					if (itinerary[(n - 1)] === undefined) {
 						clear_canvas("create_sprite_canvas");
@@ -575,6 +778,17 @@ function render_trade() {
 							exception = "t";
 							clear_canvas("create_sprite_canvas");
 							selected = (itinerary.length + 1);
+							if (itinerary.length % 2 == 1) {
+						    clickButton("create_leg");	
+							var n = itinerary.length + 1;
+							}
+							if (itinerary.length > 1) {
+							$("#submitTrade").remove();
+							$("div#submitTradeDiv").html("<button id='submitTrade'>Submit Shipping Proposal</button>");
+							}
+							else {
+							$("#submitTrade").remove();
+							}
 						}
 					}
 				}
@@ -598,7 +812,9 @@ function render_trade() {
 									}
 								}
 								var index = n + 1;
+
 								if (n == 0) {
+								var what = $(".commodity_sprite");
 									if (itinerary[n] == "nil") {
 										$("div#create_trade").html("<p id='fort" + n + "'>Leg " + index + ": " + "</p><br>");
 									}
@@ -622,6 +838,7 @@ function render_trade() {
 										$("div#create_trade").append("<p id='fort" + n + "'>Leg " + index + ": " + itinerary[n][0]["name"] +  " " + location +"</p><button class='trade_leg_cancel' id='cancel" + n  + "'>Change Fort</button>");
 									}
 								}
+								$("div#create_trade").prepend(what);
 							}
 						placing = "f";
 						render_trade_route("territory");
@@ -702,7 +919,7 @@ function place_object(object_id) {
 					$("#user_encampments_attributes_100000000000_xco").val((event.pageX - continent_offset.left)/sf);
 					$("#user_encampments_attributes_100000000000_yco").val((event.pageY - continent_offset.top)/sf);
 					$("#user_encampments_attributes_100000000000_territory").val(colors[clicked[1]][0]);
-					$("#user_encampments_attributes_100000000000_date_created").val(new Date());
+					$("#user_encampments_attributes_100000000000_date_created").val(Date.today().add(1).days());
 					return 1;
 
 					
@@ -921,12 +1138,11 @@ var ctx=c.getContext("2d");
 								sxco = sxco/wsf;
 								syco = syco/wsf;
 							}
-							var d = new Date();
 
 							$("#user_forts_attributes_100000000000_xco").val(sxco);
 							$("#user_forts_attributes_100000000000_yco").val(syco);
 							$("#user_forts_attributes_100000000000_territory").val(colors[clicked[1]][0]);
-							$("#user_forts_attributes_100000000000_date_created").val(d);
+							$("#user_forts_attributes_100000000000_date_created").val(Date.today().add(60).days());
 
 							functional_placing = "f";
 						}
@@ -945,6 +1161,7 @@ var ctx=c.getContext("2d");
 					placing = "f";
 					submissions++;
 					push_object([{name:$("#user_forts_attributes_100000000000_name").val(), ownership:$("#user_forts_attributes_100000000000_ownership").val(), territory:$("#user_forts_attributes_100000000000_territory").val(), xco:$("#user_forts_attributes_100000000000_xco").val(), yco:$("#user_forts_attributes_100000000000_yco").val()}],"fort",[<%= render partial: "fort", collection: @forts %>],"rendered_forts");
+					parseDates();
 					$('#create_sprite_canvas').remove();
 					$("#submit").css("display","none");
 					$(".fields").css("display","none");
@@ -974,6 +1191,7 @@ var ctx=c.getContext("2d");
 		place_object("encampment");
 		$("#submit").click( function(e) {
 			push_object([{name:$("#user_encampments_attributes_100000000000_name").val(), territory:$("#user_encampments_attributes_100000000000_territory").val(), xco:$("#user_encampments_attributes_100000000000_xco").val(),yco:$("#user_encampments_attributes_100000000000_yco").val()}],"encampment",[<%= render partial: "encampment", collection: @encampments %>],"rendered_encampments");
+				parseDates();
 				$("#cancel_form").css("display","none");
 				$('#create_sprite_canvas').remove();
 				$("#submit").css("display","none");
@@ -1002,16 +1220,20 @@ var ctx=c.getContext("2d");
 		$("#create_camp").css("display","none");
 		$("#create_fort").css("display","none");
 		$("#create_trade").css("display","none");
+		<%= render partial: "commodity_images" %>
 		$("#cancel_form").click( function(event) {
 			trading = "f";
+			itinerary = []
 			$("div#create_trade").text("");
 			$(".trade_button").css("display","none");
 			placing = "f";
 			terminate_form("nil");
+			$("#submitTrade").remove();
 		});
 		render_trade();
-		$("#submit").click( function(e) {
+		$("#submitTrade").click( function(e) {
 			trading = "f";
+			$("#submit").click();
 			$("#cancel_form").css("display","none");
 			$('#create_sprite_canvas').remove();
 			$("#submit").css("display","none");
@@ -1024,7 +1246,28 @@ var ctx=c.getContext("2d");
 			placing = "f";
 		});
 	});
-
+	$("div#create_trade").click(function(e) {
+		var commodity = document.elementFromPoint(e.pageX,e.pageY)
+		if ($(commodity).attr("class") == "commodity_sprite" && commodity.id != "chooseNewWhat") {
+			var itineraryId = commodity.id;
+			$("#user_trades_attributes_100000000000_what").val(itineraryId);
+			var image = $("#".concat(itineraryId));
+			$("div.sprite_div").remove();
+			$(".commodity_sprite").remove();
+			var pathHTML = $("div#create_trade").children();
+			$("div#create_trade").html(image);
+			$("div#create_trade").append("<button id='chooseNewWhat' class='commodity_sprite' >Choose Other</button>");
+			$("div#create_trade").append(pathHTML);
+		}
+		else if ($(commodity).attr("id") == "chooseNewWhat") {
+			$("#user_trades_attributes_100000000000_what").val("");
+			$("div.sprite_div").remove();
+			$(".commodity_sprite").remove();
+			var pathHTML = $("div#create_trade").children();
+			<%= render partial: "commodity_images" %>
+			$("div#create_trade").append(pathHTML);
+		}
+	});
 
 
 
@@ -1044,8 +1287,8 @@ var last_continent;
 	var gcy;
 	var twidth;
 	var ccontinent;
-	var width = $( '.map' ).width();
-	var height = $( '.map' ).height();
+	var width = $('.map').width();
+	var height = $('.map').height();
 
 // Listening for clicks to zoom map.
 
@@ -1132,15 +1375,19 @@ var last_continent;
 
 									$('.test1').append($('<canvas id="filter2" style="z-index:3;" width=' + width + ' height=' +  height + '>'));
 									$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '>'));
+
+									var filterHeight = $(".map").height()
+									var filterWidth = $(".map").width()
+
 									var f=document.getElementById("filter2");
 									var ftx=f.getContext("2d");
 									ftx.fillStyle = "#000000";
-									ftx.fillRect(0,0,width,height);
+									ftx.fillRect(0,0,filterWidth,filterHeight);
 
 									var f2=document.getElementById("filter");
 									var ftx2=f2.getContext("2d");
 									ftx2.fillStyle = "#000000";
-									ftx2.fillRect(0,0,width,height);
+									ftx2.fillRect(0,0,filterWidth,filterHeight);
 									$('#filter').css('opacity','0.5625');
 
 			// Finding the width and height values of the global map and the clicked territory to find whether the territory width or height is a greater percentage of the global value.
@@ -1281,11 +1528,14 @@ var last_continent;
 							var f=document.getElementById("filter2");
 							var ftx=f.getContext("2d");
 							ftx.fillStyle = "#000000";
-							ftx.fillRect(0,0,width,height);
+							var filterHeight = $(".map").height()
+							var filterWidth = $(".map").width()
+							ftx.fillRect(0,0,filterWidth,filterHeight);
 							var f2=document.getElementById("filter");
 							var ftx2=f2.getContext("2d");
 							ftx2.fillStyle = "#000000";
-							ftx2.fillRect(0,0,width,height);
+							ftx2.fillRect(0,0,filterWidth,filterHeight);
+							ftx.fillRect(0,0,filterWidth,filterHeight);
 							$('#filter').css('opacity','0.5625');
 							render_object(2,"f","encampment", rendered_encampments);
 							render_object(2,"f","fort", rendered_forts);
@@ -1451,25 +1701,65 @@ var last_continent;
 			}
 		}
 	});
+	parseDates();
+
+	var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
+	var overlayCanvas = document.getElementById("color_map_overlay");
+	var overlayContext = overlayCanvas.getContext("2d");
+	var overlayImage = document.getElementById("color_territory_active_image");
+	overlayContext.drawImage(overlayImage, 0, 0);
+	var overlayPixels = overlayContext.getImageData(0,0,3508,1956);
+	for (i = 0; i < colors.length; i++) {
+		for (y = 0;  y < territoryColors.length; y++) {
+			if (colors[i][0] == territoryColors[y][0]) {
+				territoryColors[y].push(colors[i][1]);
+				break
+			}
+		}
+	}
+	//for (i = 0; i < overlayPixels.data.length; i+=4) {
+		//if ((overlayPixels.data[i] != 0x00 && overlayPixels.data[i + 1] != 0x00 && overlayPixels.data[i + 2] != 0x00) || (overlayPixels.data[i] != 0x49 && overlayPixels.data[i + 1] != 0x49 && overlayPixels.data[i + 2] != 0x49)) {
+			//for (y = 0; y < territoryColors; y++) {
+				//if (overlayPixels.data[i] == territoryColors[y][2][0] && overlayPixels.data[i + 1] == territoryColors[y][2][1] && overlayPixels.data[i + 2] == territoryColors[y][2][2]) {
+					//overlayPixels.data[i] = territoryColors[y][1][0]
+					//overlayPixels.data[i + 1] = territoryColors[y][1][1]
+					//overlayPixels.data[i + 2] = territoryColors[y][1][2]
+					//break
+				//}
+			//}
+		//}
+	//}
+	//overlayContext.putImageData(overlayPixels,0,0);
+
+
 });
 </script>
 <div id="forms">
-<%= render partial: "form" %>
+    <%= render partial: "form" %>
 </div>
 <div id="create_trade">
 </div>
+<div id="submitTradeDiv">
+</div>
 <button id="cancel_form" class="button">Cancel</button>
 <div class="filter"></div>
-
 <canvas id="myCanvas" width="3508" height="1956">
-Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera</canvas>
-
+    Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
+</canvas>
+<canvas id="color_territory_active_canvas" width="3508" height="1956">
+    Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
+</canvas>
+<%= image_tag("territory_color_active_map.png", :class => "territory_color_active_image", :id => "color_territory_active_image") %>
+<canvas id="color_map_overlay" width="3508" height="1956">
+    Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
+</canvas>
 <div id="sprites">
     <%= render partial: "sprites" %>
 </div>
-
+<div id="titlediv">
+    <%= image_tag("title.png", :id => "title") %>
+</div><br>
 <%= image_tag("active_map.png", :class => "active", :id => "active") %>
-
 <div class="test1" style="margin-left:5%;">
     <%= render partial: "images" %>
 </div>

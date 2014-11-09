@@ -83,6 +83,22 @@ body {
 #create_trade {
 
 }
-.trade_buttons {
+.trade_button {
 	display:none;
 }
+#color_territory_active_canvas {
+	display:none;
+	}
+#color_territory_active_image {
+	display:none;
+	}
+.territorySVG {
+
+	z-index:20;
+	width:95%;
+  	fill: black;
+}
+#color_map_overlay {
+	display:none;
+}
+

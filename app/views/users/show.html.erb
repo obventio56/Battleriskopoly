@@ -1,14 +1,19 @@
 <script>
+
+var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
 var rendered_forts = [<%= render partial: "fort", collection: @forts %>];
+var rendered_encampments = [<%= render partial: "encampment", collection: @encampments %>];
+
 var fort_string = rendered_forts.toString();
 fort_string = fort_string.replace(",","', '");
 fort_string = fort_string.concat("'");
 fort_string = "'".concat(fort_string);
-var rendered_encampments = [<%= render partial: "encampment", collection: @encampments %>];
+
 var encampment_string = rendered_encampments.toString();
 encampment_string = encampment_string.replace(",","', '");
 encampment_string = encampment_string.concat("'");
 encampment_string = "'".concat(encampment_string);
+
 var clicked = ["f", 1];
 var placing = "f";
 var exception;
@@ -78,12 +83,28 @@ var previous_level = [];
 
 $( document ).ready(function() {
 
-$("#submitTradeDiv").click(function(submitEvent) {
-	var submitElem = document.elementFromPoint(submitEvent.pageX, submitEvent.pageY);
-	if (submitElem.id == "submitTrade") {
-		$("#edit_user_1").submit();
+	function setOriginalZoom() {
+
+		$(".territoryImage").attr("viewBox", "0 0 " + $(window).width()*0.95 + " " + $(window).height()*0.95);
+		$(".territoryImage").attr("width", $(".territoryImage").attr("viewBox").split(" ")[2]);
+		$(".territoryImage").attr("height", $(".territoryImage").attr("viewBox").split(" ")[3]);
+
+		$("#background").css("width", $(".territoryImage").width())
+		$("#renderedSprites").css("height", $(".territoryImage").height())
+		$("#renderedSprites").css("width", $(".territoryImage").width())
+		$("#background").css("height", $(".territoryImage").height())
+		$(".filter").css("width", $(".territoryImage").width())
+		$(".filter").css("height", $(".territoryImage").height())
+		$("g").attr("transform", "scale(" + $(".territoryImage").attr("viewBox").split(" ")[2]/3508 + ")")
+		//console.log($(".territoryImage").attr("viewBox").split(" ")[2]/3508);
 	}
-});
+
+	function colorMap() {
+		for (i = 0; i < territoryColors.length; i++) {
+			$(territoryColors[i][0]).css("fill", "rgb(" + territoryColors[i][1][0] + "," + territoryColors[i][1][1] + "," + territoryColors[i][1][2] + ")")
+		}
+	}
+
 	function parseDates() {
 		var newRenderedForts = [];
 		var newRenderedEncampments = [];
@@ -123,7 +144,7 @@ $("#submitTradeDiv").click(function(submitEvent) {
 			StartingPoint[0] = EndingPoint[0]
 			EndingPoint[0] = temp			
 		}
-		console.log(StartingPoint,EndingPoint)
+		//console.log(StartingPoint,EndingPoint)
 
 		var total = 0;
 		var percentInTerritory = [];
@@ -177,9 +198,9 @@ $("#submitTradeDiv").click(function(submitEvent) {
 					if (StartingPoint[1] + i == 0) {
 						offsetFactor = 0;
 					}
-					//console.log(i - StartingPoint[1])
-					//console.log(4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) )
-					console.log(mapData)
+					////console.log(i - StartingPoint[1])
+					////console.log(4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) )
+					//console.log(mapData)
 					var imageData = [mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y))], mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) + 1], mapData["data"][4*((3508*(StartingPoint[1] + (i - StartingPoint[1]) + offsetFactor)) + (StartingPoint[0] + ((i - StartingPoint[1]) * Math.round(slope)) + y)) + 2]];
 					if (0x00 == imageData[0] && 0x00 == imageData[1] && 0x00 == imageData[2]) {
 						checkNext = "t";
@@ -196,7 +217,7 @@ $("#submitTradeDiv").click(function(submitEvent) {
 								bellowTerritory = colors[l];
 							}
 						}
-						console.log(bellowTerritory)
+						//console.log(bellowTerritory)
 						currentTerritory.push(bellowTerritory);
 						currentTerritory.push(1);
 						midPoint[0] = StartingPoint[1] + i; 
@@ -225,7 +246,7 @@ $("#submitTradeDiv").click(function(submitEvent) {
 		}
 		return total;
 	}
-	console.log(calculateCost([100,100],[300,301]))
+	//console.log(calculateCost([100,100],[300,301]))
 	function calculate_lines(itinerary, i,switchback,level,gsf) {
 				var sxco;
 				var syco;
@@ -485,6 +506,7 @@ $("#submitTradeDiv").click(function(submitEvent) {
 						}
 		return [sxco,syco,exco,eyco,switchback,level,fiixco,fiiyco,fixco,fiyco,gradient];
 	}
+
 	function render_trade_route(level) {
 	
 		var gsf = $("#map").width()/3508;
@@ -642,99 +664,106 @@ $("#submitTradeDiv").click(function(submitEvent) {
 					}
 	}
 
-function render_trade() {
-	$('.test1').append('<canvas id="create_sprite_canvas" class="canvas" style="z-index:300;" width=' + $(".map").width() + ' height=' +  $(".map").height() + '>');
-	placing = "t";
-	var list = [<%= render partial: "fort", collection: @forts %>];
-	var forts = [];
-	itinerary = [];
-	selected = 0;
+	function render_trade() {
+		$('.test1').append('<canvas id="create_sprite_canvas" class="canvas" style="z-index:300;" width=' + $(".map").width() + ' height=' +  $(".map").height() + '>');
+		placing = "t";
+		var list = [<%= render partial: "fort", collection: @forts %>];
+		var forts = [];
+		itinerary = [];
+		selected = 0;
 
-		$(document).click( function(e) {
-				clear_create_canvas = "t";
-				var csc = document.getElementById("create_sprite_canvas");
-				var csctx = csc.getContext("2d");
-				var cimg = document.getElementById("selection_circle");
+			$(document).click( function(e) {
+					clear_create_canvas = "t";
+					var csc = document.getElementById("create_sprite_canvas");
+					var csctx = csc.getContext("2d");
+					var cimg = document.getElementById("selection_circle");
 
-				var n = document.elementFromPoint(e.pageX, e.pageY);
-				var num = n.id.slice(-1);
-				n = n.id;
-				n = n.replace(num,"");
-				if (n == "cancel") {
-					n = num;
-					n = parseInt(n);
-					clear_canvas("create_sprite_canvas");
-					selected = n;
-					itinerary[n] = "nil";
+					var n = document.elementFromPoint(e.pageX, e.pageY);
+					var num = n.id.slice(-1);
+					n = n.id;
+					n = n.replace(num,"");
+					if (n == "cancel") {
+						n = num;
+						n = parseInt(n);
+						clear_canvas("create_sprite_canvas");
+						selected = n;
+						itinerary[n] = "nil";
 
-					for (y = 0; y < itinerary.length; y++) {
-						if (itinerary[y] != "nil") {
-							var location = itinerary[y][0]["territory"];
-							location = location.replace("#","");
-							var location = location.slice(0,1).replace(location.slice(0,1), location.slice(0,1).toUpperCase()).concat(location.slice(1, location.length));
-							for (j = 0; j < continents.length; j++) {
-								for (l = 0; l < continents[j].length; l++) {
-									if (colors[continents[j][l]][0] == itinerary[y][0]["territory"]) {
-										var continent = color_key[j][0];
-										continent = continent.replace("#","");
-										continent = continent.slice(0,1).replace(continent.slice(0,1), continent.slice(0,1).toUpperCase()).concat(continent.slice(1, continent.length));
-										location = location.concat(", ".concat(continent));		
-										while (location.indexOf("_") != -1) {
-											var l = location.indexOf("_");
-											l = "_".concat(location.charAt(1 + l));
-											location = location.replace(l," ".concat(l.charAt(1).toUpperCase()));
-										}						
+						for (y = 0; y < itinerary.length; y++) {
+							if (itinerary[y] != "nil") {
+								var location = itinerary[y][0]["territory"];
+								location = location.replace("#","");
+								var location = location.slice(0,1).replace(location.slice(0,1), location.slice(0,1).toUpperCase()).concat(location.slice(1, location.length));
+								for (j = 0; j < continents.length; j++) {
+									for (l = 0; l < continents[j].length; l++) {
+										if (colors[continents[j][l]][0] == itinerary[y][0]["territory"]) {
+											var continent = color_key[j][0];
+											continent = continent.replace("#","");
+											continent = continent.slice(0,1).replace(continent.slice(0,1), continent.slice(0,1).toUpperCase()).concat(continent.slice(1, continent.length));
+											location = location.concat(", ".concat(continent));		
+											while (location.indexOf("_") != -1) {
+												var l = location.indexOf("_");
+												l = "_".concat(location.charAt(1 + l));
+												location = location.replace(l," ".concat(l.charAt(1).toUpperCase()));
+											}						
+										}
 									}
 								}
 							}
-						}
-							if (itinerary.length > 1) {
-							$("#submitTrade").remove();
-							$("div#submitTradeDiv").html("<button id='submitTrade'>Submit Shipping Proposal</button>");
-							}
-							else {
-							$("#submitTrade").remove();
-							}
+								if (itinerary.length > 1) {
+								$("#submitTrade").remove();
+								$("div#submitTradeDiv").html("<button id='submitTrade'>Submit Shipping Proposal</button>");
+								}
+								else {
+								$("#submitTrade").remove();
+								}
 
-							var index = y + 1;
-						if (y == 0) {
-							var what = $(".commodity_sprite");
-							if (itinerary[y] == "nil") {
-								$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
+								var index = y + 1;
+							if (y == 0) {
+								var what = $(".commodity_sprite");
+								if (itinerary[y] == "nil") {
+									$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
+								}
+								else {
+									$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button><br>");
+								}
 							}
-							else {
-								$("div#create_trade").html("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button><br>");
+							else if (y > 0 && y < (itinerary.length - 1)) {
+								if (itinerary[y] == "nil") {
+									$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
+								}
+								else {
+									$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button><br>");
+								}
 							}
+							else if (y == (itinerary.length - 1)) {
+								if (itinerary[y] == "nil") {
+									$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + "</p>");
+								}
+								else {
+									$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button>");
+								}
+							}
+						$("div#create_trade").prepend(what);
 						}
-						else if (y > 0 && y < (itinerary.length - 1)) {
-							if (itinerary[y] == "nil") {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + "</p><br>");
-							}
-							else {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button><br>");
-							}
+						if (itinerary[(n - 1)] === undefined) {
+							clear_canvas("create_sprite_canvas");
+							render_trade_route("territory");
 						}
-						else if (y == (itinerary.length - 1)) {
-							if (itinerary[y] == "nil") {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + "</p>");
-							}
-							else {
-								$("div#create_trade").append("<p id='fort" + index + "'>Leg " + index + ": " + itinerary[y][0]["name"] +  " " + location +"</p><button  class='trade_leg_cancel' id='cancel" + y  + "'>Change Fort</button>");
-							}
+						else {
+							clear_canvas("create_sprite_canvas");
+							render_trade_route("territory");
 						}
-					$("div#create_trade").prepend(what);
+						exception = "t";
 					}
-					if (itinerary[(n - 1)] === undefined) {
-						clear_canvas("create_sprite_canvas");
-						render_trade_route("territory");
-					}
-					else {
-						clear_canvas("create_sprite_canvas");
-						render_trade_route("territory");
-					}
-					exception = "t";
-				}
-			});
+				});
+
+		$("#submitTradeDiv").click(function(submitEvent) {
+			var submitElem = document.elementFromPoint(submitEvent.pageX, submitEvent.pageY);
+			if (submitElem.id == "submitTrade") {
+				$("#edit_user_1").submit();
+			}
+		});
 
 		$(".test1").click( function(e) {
 			clear_create_canvas = "t";
@@ -1273,476 +1302,140 @@ var ctx=c.getContext("2d");
 
 var last_continent;
 
-
-
-
-
-// Drawing original canvas to hold the global active map.
-
-	var img=document.getElementById("active");
-	ctx.drawImage(img,0,0);
-
-// Setting the default clicked value.
-	var gcx;
-	var gcy;
-	var twidth;
-	var ccontinent;
-	var width = $('.map').width();
-	var height = $('.map').height();
-
-// Listening for clicks to zoom map.
-
-	$(document).click(function(e) {
-		if (placing != "t") {
-			var melem;
-			previous_level[2] = $("#create_sprite_canvas").css("z-index");
-			clear_for_clicks("move");
-			$(".map").css("z-index","100");
-			melem = document.elementFromPoint(e.pageX, e.pageY);
-			$(".map").css("z-index","-2");
-			clear_for_clicks("put back",["territory","continent","create"]);
-			if (melem.id == "map" && exception != "t") {
-		 		if (placing == "f") {
-						$('#filter2').remove();
-						$('#filter').remove();
-
-			// Checking wether or not the map is currently zoomed to a continent.
-
-					if (clicked[0] == "t" && clicked[2] != "t") {
-
-			// Defining and formatting the element of the current click, and the recorded element of the last click.
-						clear_for_clicks("move");
-						var elem = document.elementFromPoint(e.pageX, e.pageY);
-						var continent_name = color_key[clicked[1]][0];
-						continent_name = continent_name.replace(/#/g, '');
-
-
-
-			// Finding the position of the click relative to the centered continental map.
-
-							var coffset = $(color_key[clicked[1]][0]).offset();
-							var cx = (e.pageX - coffset.left );
-							var cy = (e.pageY - coffset.top );
-			
-
-
-			// Finding the scale of the displayed continent to its full size and applying that to the click coordinates.
-
-							var sf = $(color_key[clicked[1]][0]).width()/color_key[clicked[1]][3][0];
-							cx = cx/sf;
-							cy = cy/sf;
-
-
-
-			// Clearing the canvas and painting on it the appropriate continental active map.
-
-							ctx.clearRect(0, 0, c.width, c.height);
-							var active_img_name = continent_name.concat('_active')
-							var img = document.getElementById(active_img_name);
-							ctx.drawImage(img,0,0);
-
-
-
-			// Finding the color of the pixel at the specified location on the active map.
-
-						var pixelData = c.getContext('2d').getImageData(cx, cy, 1, 1).data;
-
-
-
-			// Checking if the current click is on the same continent as the last click.
-						if ((elem.id == continent_name) && (pixelData[0] != 0x49 && pixelData[1] != 0x49 && pixelData[2] != 0x49)) {
-
-
-			// Checking the found pixels color against the list of territorial colors.
-
-							for (var i = 0; i < 38 ; i++) {
-
-								if (colors[i][1][0] == pixelData[0] && colors[i][1][1] == pixelData[1] && colors[i][1][2] == pixelData[2]) {
-
-
-			// Finding the clicked territorys id and setting its display value to inline.
-									var clicked_continent = colors[i][0];
-									level = "territory";
-									$(clicked_continent).css('max-height', $(clicked_continent).height());
-									$(clicked_continent).css('max-width', $(clicked_continent).width());
-									$(clicked_continent).css('display','inline');
-									if (trading != "t") {
-										$("#create_fort").css("display","inline");
-										$("#create_camp").css("display","inline");
-									}
-									$("#create_trade").css("display","inline");
-									twidth = $(clicked_continent).width();
-
-									$('.test1').append($('<canvas id="filter2" style="z-index:3;" width=' + width + ' height=' +  height + '>'));
-									$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '>'));
-
-									var filterHeight = $(".map").height()
-									var filterWidth = $(".map").width()
-
-									var f=document.getElementById("filter2");
-									var ftx=f.getContext("2d");
-									ftx.fillStyle = "#000000";
-									ftx.fillRect(0,0,filterWidth,filterHeight);
-
-									var f2=document.getElementById("filter");
-									var ftx2=f2.getContext("2d");
-									ftx2.fillStyle = "#000000";
-									ftx2.fillRect(0,0,filterWidth,filterHeight);
-									$('#filter').css('opacity','0.5625');
-
-			// Finding the width and height values of the global map and the clicked territory to find whether the territory width or height is a greater percentage of the global value.
-
-									var imgw = $(clicked_continent).width();
-									var imgh = $(clicked_continent).height();
-									var mapw = $('.map').width();
-									var maph = $('.map').height();
-									var asf = mapw/3508
-
-									var toffset = $(color_key[clicked[1]][0]).offset();
-									var offset = $('.map').offset();
-									var startingx = colors[i][2][0];
-									var startingy = colors[i][2][1];
-					
-									var continentx = color_key[clicked[1]][2][0];
-									var continenty = color_key[clicked[1]][2][1];
-
-									var continentw = color_key[clicked[1]][3][0];
-									var rcontinentw = $(color_key[clicked[1]][0]).width();
-
-									var csf = rcontinentw/continentw;
-						
-									var placex = (startingx - continentx)*csf;
-									var placey = (startingy - continenty)*csf;
-						
-									var ox = (startingx - continentx);
-									var oy = (startingy - continenty);
-
-									placex = placex + (toffset.left - offset.left);
-									placey = placey + (toffset.top - offset.top);
-
-									var wper = imgw/(mapw - placex);
-									var hper = imgh/(maph - placey);
-			// Finding the dimensions of the territorial picture to be diplayed.
-
-									if (wper > hper) {
-						
-										if (imgw > (mapw - placex) ) {
-											$(clicked_continent).attr('width', (mapw - placex) );
-										}
-									}
-
-									else {
-
-										if (imgh > (maph - placey) ) {
-											$(clicked_continent).attr('height', (maph - placey) );
-										}
-									}
-			
-		
-
-			// Finding the position to place the territorial picture.
-
-									$(clicked_continent).css("left", placex );
-									$(clicked_continent).css("top", placey );
-						
-									clicked = ["t", i, "t"];
-									render_object(4,"t","fort",rendered_forts);
-									render_object(4,"f","encampment", rendered_encampments);
-									$("#territory_sprites").css("z-index","34");
-									if (trading == "t") {
-										clear_canvas("create_sprite_canvas");
-										render_trade_route("territory");
-								$("#create_sprite_canvas").css("z-index","51");
-									}
-									english_level = "territory";
-								}
-							}
-						}
-
-
-
-			//Continent when click away
-			 
-						else {
-							english_level = "globe";
-							level = "global";
-							$('.continent').css("display", "none" );
-							clear_canvas("continent_sprites");
-							clicked = ["f", 0];
-							if (trading == "t") {
-								clear_canvas("create_sprite_canvas");
-								$("#create_sprite_canvas").css("z-index","300");
-								render_trade_route("globe");
-								
-							}
-	
-						}
-					}
-
-					else if (clicked[0] == "t" && clicked[2] == "t") {
-
-			// Defining and formatting the element of the current click, and the recorded element of the last click.
-						clear_for_clicks("move",false);
-						var elem = document.elementFromPoint(e.pageX, e.pageY);
-						clear_for_clicks("put back",["territory","create"]);
-						$("#territory_sprites").css("z-index","50");
-						var continent_name = colors[clicked[1]][0];
-						continent_name = continent_name.replace(/#/g, '');
-
-
-			// Finding the position of the click relative to the centered continental map.
-
-						var toffset = $(colors[clicked[1]][0]).offset();
-						var tx = (e.pageX - toffset.left );
-						var ty = (e.pageY - toffset.top );
-			
-
-
-			// Finding the scale of the displayed continent to its full size and applying that to the click coordinates.
-
-						var tsf = $(colors[clicked[1]][0]).width()/twidth;
-						tx = tx/tsf;
-						ty = ty/tsf;
-
-
-
-			// Clearing the canvas and painting on it the appropriate continental active map.
-
-						ctx.clearRect(0, 0, c.width, c.height);
-						var img = document.getElementById(continent_name);
-						ctx.drawImage(img,0,0);
-
-
-
-			// Finding the color of the pixel at the specified location on the active map.
-
-						var pixelData = c.getContext('2d').getImageData(tx, ty, 1, 1).data;
-
-
-
-			// Second click on a territory
-
-						if ((elem.id == continent_name) && (pixelData[3] != 0x00)) {
-							$('.test1').append($('<canvas id="filter2" style="z-index:3;" width=' + width + ' height=' +  height + '>'));
-							$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '>'));
-							var f=document.getElementById("filter2");
-							var ftx=f.getContext("2d");
-							ftx.fillStyle = "#000000";
-							var filterHeight = $(".map").height()
-							var filterWidth = $(".map").width()
-							ftx.fillRect(0,0,filterWidth,filterHeight);
-							var f2=document.getElementById("filter");
-							var ftx2=f2.getContext("2d");
-							ftx2.fillStyle = "#000000";
-							ftx2.fillRect(0,0,filterWidth,filterHeight);
-							ftx.fillRect(0,0,filterWidth,filterHeight);
-							$('#filter').css('opacity','0.5625');
-							render_object(2,"f","encampment", rendered_encampments);
-							render_object(2,"f","fort", rendered_forts);
-							$("#territory_sprites").css("z-index","34");
-
-						}
-
-			// Territory when click away
-						else {
-							level = "globe";
-							clicked = last_continent;
-							render_object(2,"t","encampment",rendered_encampments);
-							render_object(2,"f","fort",rendered_forts);
-							$('#create_fort').css("display","none");
-							$('#create_camp').css("display","none");
-							$("#create_trade").css("display","none");
-							$('.territory').css("display", "none" );
-							$('.test1').append('<canvas id="filter" style="z-index:1;" width=' + $(".map").width() + ' height=' +  $(".map").height() + '>');
-							var f=document.getElementById("filter");
-							var ftx=f.getContext("2d");
-							ftx.fillStyle = "#000000";
-							ftx.fillRect(0,0,$(".map").width(),$(".map").height());
-							$('#filter').css('opacity','0.75');
-							clicked = ["t", ccontinent];
-							if (trading == "t") {
-								clear_canvas("create_sprite_canvas");
-								render_trade_route("continent");
-								$("#create_sprite_canvas").css("z-index","51");
-							}
-							english_level = "continent";
-						}
-					}
-
-					else {
-
-
-
-			// Drawing the global active map on the canvas
-
-						img=document.getElementById("active");
-						ctx.drawImage(img,0,0);	
-
-
-
-			// Finding the location of the click relative to the map.
-
-						var offset = $(".map").offset();
-						var x = (e.pageX - offset.left );
-						var y = (e.pageY - offset.top );
-
-
-
-			// Finding the width and height of the diplayed global map and the scale factor of the displayed map to the full one, then appling the scale factor to the click coordinates.
-			 
-						var sf = 3508/width;
-						x = x * sf;
-						y = y * sf;
-
-
-
-			// Finding the color of the specified pixel on the active map.
-
-						var pixelData = c.getContext('2d').getImageData(x, y, 1, 1).data;
-	
-
-
-			// Checking every continent active color to see if it matches the found pixel color.
-
-						for (var i = 0; i < 6 ; i++) {
-
-							if (color_key[i][1][0] == pixelData[0] && color_key[i][1][1] == pixelData[1] && color_key[i][1][2] == pixelData[2]) {
-
-
-
-			// Finding the clicked continents id and setting its display value to inline.
-								level = "continent";
-								var clicked_territory = color_key[i][0];
-								$(clicked_territory).css("display", "inline" );
-
-			// Creating and drawing on a canvas at seventy-five percent opacity.
-								ccontinent = i;
-								$('.test1').append($('<canvas id="filter" style="z-index:1;" width=' + width + ' height=' +  height + '</canvas>'));
-								var f=document.getElementById("filter");
-								var ftx=f.getContext("2d");
-								ftx.fillStyle = "#000000";
-								ftx.fillRect(0,0,width,height);
-	
-
-
-			// Finding the continent and global map images width and height values, then seeing which continental dimension is a larger percentage of the global one.
-
-								var imgw = $(clicked_territory).width();
-								var imgh = $(clicked_territory).height();
-								var mapw = $('.map').width();
-								var maph = $('.map').height();
-								var wper = imgw/(mapw);
-								var hper = imgh/(maph);
-
-
-
-			// Finding the dimensions of the continent image to be displayed.
-
-								if (wper > hper) {
-	
-									if (imgw > mapw) {
-
-										$(clicked_territory).attr("width", mapw );
-									}
-
-								}
-
-								else {
-
-									if (imgh > maph ) {
-
-										$(clicked_territory).attr("height", maph );
-
-									}
-								}
-
-
-
-			// Finding the position of the diplayed continental image.
-
-								imgw = $(clicked_territory).width();
-								imgh = $(clicked_territory).height();
-								var midh = (maph/2) - (imgh/2);
-								var midw = (mapw/2) - (imgw/2);
-								gcx = midw;
-								gcy = midh;
-								$(clicked_territory).css("left", midw );
-								$(clicked_territory).css("top",midh );
-								clicked = ["t",i];
-								last_continent = clicked;
-								render_object(2,"t","fort", rendered_forts);
-								render_object(2,"f","encampment", rendered_encampments);
-								english_level = "continent";
-								if (trading == "t") {
-									clear_canvas("create_sprite_canvas");
-									render_trade_route("continent");
-									$("#create_sprite_canvas").css("z-index","51");
-								}
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				$("#create_sprite_canvas").css("z-index","51");
-				if (english_level == "territory") {
-				$("#territory_sprites").css("z-index","50");
-				}
-				exception = "f";
-				if (level == "territory") {
-					render_object(4,"t","fort", rendered_forts);
-					render_object(4,"f","encampment", rendered_encampments);
-				}
-				else if (level == "continent") {
-					render_object(2,"t","fort", rendered_forts);
-					render_object(2,"f","encampment", rendered_encampments);
+	function renderObject(object,levelInfo) {
+		var list;
+		if (object == "encampment") {
+			list = rendered_encampments; 
+		}
+		else if (object == "fort") {
+			list = rendered_forts; 
+		}
+		var sortedList = [];
+		if (levelInfo[0] == "territorial") {
+			for (i = 0; i < list.length; i++) {
+				if (list[i][0].territory == levelInfo[1]) {
+					sortedList.push(list[i]);
 				}
 			}
 		}
-	});
-	parseDates();
-
-	var territoryColors = <%= render partial: "territory_colors", locals: {territoryColors: @territoryColors} %>;
-	var overlayCanvas = document.getElementById("color_map_overlay");
-	var overlayContext = overlayCanvas.getContext("2d");
-	var overlayImage = document.getElementById("color_territory_active_image");
-	overlayContext.drawImage(overlayImage, 0, 0);
-	var overlayPixels = overlayContext.getImageData(0,0,3508,1956);
-	for (i = 0; i < colors.length; i++) {
-		for (y = 0;  y < territoryColors.length; y++) {
-			if (colors[i][0] == territoryColors[y][0]) {
-				territoryColors[y].push(colors[i][1]);
-				break
+		else if (levelInfo[0] == "continental") {
+			var children = $("continentalSVG").children();
+			for (i = 0; i < list.length; i++) {
+				for (y = 0; children.length; y++) {
+					if ("#".concat(children[y].id) == list[i].territory) {
+						sortedList.push(list[i]);
+					}
+				}
+			}
+		}
+		else if (levelInfo[0] == "global") {
+			sortedList = list;
+		}
+		for (i = 0; i < sortedList.length; i++) {
+			$("#renderedSprites").append($("#sprites").children("#".concat(object)).clone().attr("class","renderedSprite").attr("id",object + i));
+			if (levelInfo[0] == "territorial") {
+			var xPosition = sortedList[i][0].xco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0] + ($("#background").offset().left - $("#".concat(levelInfo[0]).concat("SVG")).offset().left)
+			var yPosition = sortedList[i][0].yco*$("#territorialSVG").children("g").attr("transform").split("(")[1].split(")")[0] + ($("#background").offset().top - $("#".concat(levelInfo[0]).concat("SVG")).offset().top)
+			$("#" + object + i).css("top",yPosition + "px").css("left",xPosition + "px")
+			$("#renderedSprites").css("z-index","10")
 			}
 		}
 	}
-	//for (i = 0; i < overlayPixels.data.length; i+=4) {
-		//if ((overlayPixels.data[i] != 0x00 && overlayPixels.data[i + 1] != 0x00 && overlayPixels.data[i + 2] != 0x00) || (overlayPixels.data[i] != 0x49 && overlayPixels.data[i + 1] != 0x49 && overlayPixels.data[i + 2] != 0x49)) {
-			//for (y = 0; y < territoryColors; y++) {
-				//if (overlayPixels.data[i] == territoryColors[y][2][0] && overlayPixels.data[i + 1] == territoryColors[y][2][1] && overlayPixels.data[i + 2] == territoryColors[y][2][2]) {
-					//overlayPixels.data[i] = territoryColors[y][1][0]
-					//overlayPixels.data[i + 1] = territoryColors[y][1][1]
-					//overlayPixels.data[i + 2] = territoryColors[y][1][2]
-					//break
-				//}
-			//}
-		//}
-	//}
-	//overlayContext.putImageData(overlayPixels,0,0);
 
+	parseDates();
+	colorMap();
+	setOriginalZoom();
+
+	var width = $('.map').width();
+	var height = $('.map').height();
+
+	var zoomLevel = ["global","globe"];
+	//renderObject("encampment",zoomLevel);
+	//renderObject("fort",zoomLevel);
+	$(".territoryImage").click( function(e) {
+
+		if ($(document.elementFromPoint(e.pageX,e.pageY)).is("path") == true) {
+			if (zoomLevel[0] == "global") { 
+				var continent = $(".".concat($(document.elementFromPoint(e.pageX,e.pageY)).attr("class")))
+				for (i = 0; i < continent.length; i++) {
+					$("#continentalSVG").append($(continent[i]).parent().clone())
+				}
+
+				var box = $("#continentalSVG")[0].getBoundingClientRect()
+				var newScaleFactor = ($("#background").height()*$("#continentalSVG").children("g").attr("transform").split("(")[1].replace(")",""))/box.height*0.95;
+				$("#continentalSVG").children("g").attr("transform","scale(" + newScaleFactor + ")");
+				var scaledBox = $("#continentalSVG").offset();
+				scaledBox.top = ((scaledBox.top - $("#background").offset().top)/newScaleFactor) - (($("#background").height()/2) - ($("#continentalSVG")[0].getBoundingClientRect().height/2))
+				scaledBox.left = ((scaledBox.left - $("#background").offset().left)/newScaleFactor) - (($("#background").width()/2) - ($("#continentalSVG")[0].getBoundingClientRect().width/2))
+				$("#continentalSVG").children("g").attr("transform", $("#continentalSVG").children("g").attr("transform") + " translate(-" + scaledBox.left + ", -" + scaledBox.top + ")")
+				$("#continentalSVG").css("z-index","2");
+				$("#continentFilter").css("display","inline");
+				zoomLevel = ["continental",$("#continentalSVG").children("g").attr("class")];
+				//renderObject("encampment",zoomLevel);
+				//renderObject("fort",zoomLevel);
+			}
+			else if (zoomLevel[0] == "continental") {
+				var territory = "#" + document.elementFromPoint(e.pageX,e.pageY).id;
+				$("#territorialSVG").append($(territory).parent().clone())
+				var box = $("#territorialSVG")[0].getBoundingClientRect();
+				var newScaleFactor
+				if (box.width/3508 > box.height/1956) {
+					newScaleFactor = ($("#background").width()*parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.width*0.95;
+				}
+				else {
+					newScaleFactor = ($("#background").height()*parseFloat($("#territorialSVG").children("g").attr("transform").split(")")[0].replace("scale(","")))/box.height*0.95;
+				}
+				$("#territorialSVG").children("g").attr("transform","scale(" + newScaleFactor + ")");
+				var scaledBox = $("#territorialSVG").offset()
+				//console.log(scaledBox)
+				scaledBox.top = ((scaledBox.top - $("#background").offset().top)/newScaleFactor) - ($("#background").height() - ($("#territorialSVG")[0].getBoundingClientRect().height))/(newScaleFactor*2)
+				scaledBox.left = ((scaledBox.left - $("#background").offset().left)/newScaleFactor) - ($("#background").width() - ($("#territorialSVG")[0].getBoundingClientRect().width))/(newScaleFactor*2)
+				//console.log(($("#background").width() - ($("#territorialSVG")[0].getBoundingClientRect().width))/(newScaleFactor*2))
+				$("#territorialSVG").children("g").attr("transform", $("#territorialSVG").children("g").attr("transform") + " translate(" + -1*scaledBox.left + ", " + -1*scaledBox.top + ")")
+				$("#territorialSVG").css("z-index","4");
+				$("#territoryFilter").css("display","inline");
+				zoomLevel = ["territorial",territory, zoomLevel[1]];
+				//renderObject("encampment",zoomLevel);
+				//renderObject("fort",zoomLevel);
+			}
+		}
+
+		else {
+			if (zoomLevel[0] == "continental") {
+				$("#continentalSVG").children().remove();
+				$("#continentFilter").css("display","none");
+				$("#continentalSVG").css("z-index","-1");
+				zoomLevel = ["global","globe"];
+				//renderObject("encampment",zoomLevel);
+				//renderObject("fort",zoomLevel);
+			}
+			else if (zoomLevel[0] == "territorial") {
+				$("#territorialSVG").children().remove();
+				$("#territoryFilter").css("display","none");
+				$("#territorialSVG").css("z-index","-1");
+				$("#continentalSVG").css("z-index","2");
+				zoomLevel = ["continental", zoomLevel[2]];
+				//renderObject("encampment",zoomLevel);
+				//renderObject("fort",zoomLevel);
+			}
+		}
+	});
 
 });
 </script>
+
 <div id="forms">
     <%= render partial: "form" %>
 </div>
+
 <div id="create_trade">
 </div>
+
 <div id="submitTradeDiv">
 </div>
+
 <button id="cancel_form" class="button">Cancel</button>
-<div class="filter"></div>
+
 <canvas id="myCanvas" width="3508" height="1956">
     Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
 </canvas>
@@ -1753,15 +1446,29 @@ var last_continent;
 <canvas id="color_map_overlay" width="3508" height="1956">
     Oops, Your Browser Doesn't Support HTML5 Elements Try Again In Up to Date Version of IE Firefox Chrome Safari or Opera
 </canvas>
+
 <div id="sprites">
     <%= render partial: "sprites" %>
 </div>
-<div id="titlediv">
-    <%= image_tag("title.png", :id => "title") %>
-</div><br>
+
 <%= image_tag("active_map.png", :class => "active", :id => "active") %>
-<div class="test1" style="margin-left:5%;">
+
+
+<div class="test1"  width="100%" height="100%">
+	<div id="renderedSprites"></div>
+	<div id="background"></div>
+	<div id="continentFilter" class="filter"></div>
+	<div id="territoryFilter" class="filter"></div>
+	<svg
+    preserveAspectRatio="xMinYMin meet"
+	class="territoryImage" 
+	id="continentalSVG"></svg>
+	<svg
+    preserveAspectRatio="xMinYMin meet"
+	class="territoryImage" 
+	id="territorialSVG"></svg>
     <%= render partial: "images" %>
 </div>
+
 
 <div class="test" style="color:red;"></div>

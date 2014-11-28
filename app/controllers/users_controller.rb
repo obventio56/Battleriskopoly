@@ -38,12 +38,14 @@ class UsersController < ApplicationController
 				if User.find(attr_value).color.instance_of?(NilClass) != true
 					@territoryColors << Array.new
 					colorUser = User.find(attr_value)
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").to_i
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,4].insert(0, "0x").to_i
-					@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").to_i
+					logger.info colorUser.id
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[0,2].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[2,2].insert(0, "0x").hex
+					@territoryColors[@territoryColors.length - 1] << colorUser.color[4,6].insert(0, "0x").hex
 				end
 			end
 		end
+		logger.info @territoryColors
 
 	end
 	
